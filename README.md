@@ -26,7 +26,26 @@ track-care-ml/
 └── README.md                # Documentação
 ```
 
-## 3. Análise de Engenharia e "Datalização"
+## 3. Dicionário de Dados
+Abaixo estão as descrições das informações presentes no dataset utilizado:
+
+* **timestamp**: Data e hora da coleta.
+
+* **patient_id**: Identificador único da pulseira do paciente.
+
+* **imei**: Identificador único do hardware (celular) que captou o sinal.
+
+* **employee_id**: Identificador do colaborador que portava o celular no momento.
+
+* **sensor_latlong**: Coordenada GPS/Interna da última posição conhecida do celular.
+
+* **sensor_room**: Sala onde o colaborador se encontrava (baseado na posição do sensor).
+
+* **rssi**: Valor bruto da potência do sinal recebido.
+
+* **actual_patient_room**: (Target/Label) A localização real e auditada do paciente (utilizada apenas para treinamento).
+
+## 4. Análise de Engenharia e "Datalização"
 O dataset fornecido simula condições reais de telemetria hospitalar, apresentando alto nível de ruído e sinais ambíguos. Durante o desenvolvimento, as seguintes decisões de engenharia foram tomadas:
 
 * **Tratamento de RSSI:** Implementação de clipping em [-100, -30] dBm para mitigar leituras fisicamente impossíveis e picos de interferência captados pelos sensores.
@@ -35,12 +54,12 @@ O dataset fornecido simula condições reais de telemetria hospitalar, apresenta
     * employee_id: Descartado para evitar viés comportamental, garantindo que o modelo aprenda com sinais físicos e não com a rotina de movimentação de funcionários específicos.
 * **Escolha do Modelo:** Após testes comparativos com algoritmos de Boosting e técnicas de balanceamento, optou-se pela versão estável do Random Forest com 51% de acurácia. Observou-se que otimizações estatísticas agressivas (como SMOTE) causavam overfitting ao ruído das coordenadas geográficas, prejudicando a generalização.
 
-## 4. Estratégia de Janelamento Temporal (Parâmetro X)
+## 5. Estratégia de Janelamento Temporal (Parâmetro X)
 Conforme análise técnica dos dados brutos, uma leitura única de RSSI é insuficiente para uma localização de precisão devido ao fenômeno de multipath fading. 
 
 **Sugestão Técnica: X = 2 minutos.** **Justificativa:** Um janelamento de 120 segundos permite que a API receba múltiplas amostras de um mesmo paciente e aplique uma média móvel. Esta estratégia de engenharia filtra as flutuações momentâneas de sinal e eleva a confiança operacional do sistema de ~51% para níveis aceitáveis para o monitoramento de saúde, sem gerar um atraso (lag) impeditivo.
 
-## 5. Como Executar a Solução
+## 6. Como Executar a Solução
 
 ### Via Docker (Recomendado)
 Para garantir a reprodutibilidade do ambiente:
@@ -59,7 +78,7 @@ Para garantir a reprodutibilidade do ambiente:
 2. Inicie o servidor:
    uvicorn api.main:app --reload
 
-## 6. Exemplo de Requisição (POST /predict)
+## 7. Exemplo de Requisição (POST /predict)
 O endpoint de predição espera um JSON no seguinte formato:
 {
   "imei": "IMEI_SAMSUNG_S23",
