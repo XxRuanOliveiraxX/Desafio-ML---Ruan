@@ -20,7 +20,7 @@ track-care-ml/
 │   ├── label_encoder.pkl    # Mapeamento de classes (salas)
 │   └── model_columns.pkl    # Lista de colunas para consistência da API
 ├── notebooks/
-│   └── 01_eda_e_pre_processamento.ipynb
+│   └── 01_eda.ipynb
 ├── Dockerfile               # Containerização da solução
 ├── requirements.txt         # Dependências do projeto
 └── README.md                # Documentação
