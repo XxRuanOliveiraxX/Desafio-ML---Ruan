@@ -30,19 +30,12 @@ track-care-ml/
 Abaixo estão as descrições das informações presentes no dataset utilizado:
 
 * **timestamp**: Data e hora da coleta.
-
 * **patient_id**: Identificador único da pulseira do paciente.
-
 * **imei**: Identificador único do hardware (celular) que captou o sinal.
-
 * **employee_id**: Identificador do colaborador que portava o celular no momento.
-
 * **sensor_latlong**: Coordenada GPS/Interna da última posição conhecida do celular.
-
 * **sensor_room**: Sala onde o colaborador se encontrava (baseado na posição do sensor).
-
 * **rssi**: Valor bruto da potência do sinal recebido.
-
 * **actual_patient_room**: (Target/Label) A localização real e auditada do paciente (utilizada apenas para treinamento).
 
 ## 4. Análise de Engenharia e "Datalização"
